@@ -1,0 +1,259 @@
+------------------------------UC 1 - CREATE ADDRESS BOOK DATABASE-----------------------
+
+mysql> create database Address_Book;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| address_book       |
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use address_book;
+Database changed
+
+mysql> select database();
++--------------+
+| database()   |
++--------------+
+| address_book |
++--------------+
+1 row in set (0.00 sec)
+
+------------------------------UC 2 - CREATE ADDRESS BOOK TABLE ------------------------
+
+mysql> create table AddressBook(id INT unsigned NOT NULL AUTO_INCREMENT, FirstName varchar(50),LastName varchar(50),Address varchar(150),City varchar(30),State varchar(50),Zip varchar(6),Phone varchar(12),Email varchar(50),PRIMARY KEY (id) );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> describe addressbook;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int unsigned | NO   | PRI | NULL    | auto_increment |
+| FirstName | varchar(50)  | YES  |     | NULL    |                |
+| LastName  | varchar(50)  | YES  |     | NULL    |                |
+| Address   | varchar(150) | YES  |     | NULL    |                |
+| City      | varchar(30)  | YES  |     | NULL    |                |
+| State     | varchar(50)  | YES  |     | NULL    |                |
+| Zip       | varchar(6)   | YES  |     | NULL    |                |
+| Phone     | varchar(12)  | YES  |     | NULL    |                |
+| Email     | varchar(50)  | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+9 rows in set (0.01 sec)
+
+------------------------------UC 3 - INSERT CONTACTS IN ADDRESS BOOK TABLE ------------------------
+
+mysql> insert into addressbook values
+    -> ('1','Hari','Om','Bharat Nagar','Kolhapur','Maharashtra','411209','9008776655','hariom@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into addressbook values
+    -> ('2','Gagan','Shahu','Shanti Nagar','Bengaluru','Karnataka','525409','8899887661','gagan@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into addressbook values
+    -> ('3','Raman','Rathi','Shastri Village','Mysore','Karnataka','568409','9098545432','raman@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> describe addressbook;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int unsigned | NO   | PRI | NULL    | auto_increment |
+| FirstName | varchar(50)  | YES  |     | NULL    |                |
+| LastName  | varchar(50)  | YES  |     | NULL    |                |
+| Address   | varchar(150) | YES  |     | NULL    |                |
+| City      | varchar(30)  | YES  |     | NULL    |                |
+| State     | varchar(50)  | YES  |     | NULL    |                |
+| Zip       | varchar(6)   | YES  |     | NULL    |                |
+| Phone     | varchar(12)  | YES  |     | NULL    |                |
+| Email     | varchar(50)  | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+9 rows in set (0.01 sec)
+
+mysql> select * from addressbook;
++----+-----------+----------+-----------------+-----------+-------------+--------+------------+------------------+
+| id | FirstName | LastName | Address         | City      | State       | Zip    | Phone      | Email            |
++----+-----------+----------+-----------------+-----------+-------------+--------+------------+------------------+
+|  1 | Hari      | Om       | Bharat Nagar    | Kolhapur  | Maharashtra | 411209 | 9008776655 | hariom@gmail.com |
+|  2 | Gagan     | Shahu    | Shanti Nagar    | Bengaluru | Karnataka   | 525409 | 8899887661 | gagan@gmail.com  |
+|  3 | Raman     | Rathi    | Shastri Village | Mysore    | Karnataka   | 568409 | 9098545432 | raman@gmail.com  |
++----+-----------+----------+-----------------+-----------+-------------+--------+------------+------------------+
+3 rows in set (0.00 sec)
+
+------------------------------UC 4 - EDIT CONTACTS USING NAME ------------------------
+
+mysql> update addressbook set address='Ganesh Nagar',phone='1234567890' where firstname='Gagan';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++----+-----------+----------+-----------------+-----------+-------------+--------+------------+------------------+
+| id | FirstName | LastName | Address         | City      | State       | Zip    | Phone      | Email            |
++----+-----------+----------+-----------------+-----------+-------------+--------+------------+------------------+
+|  1 | Hari      | Om       | Bharat Nagar    | Kolhapur  | Maharashtra | 411209 | 9008776655 | hariom@gmail.com |
+|  2 | Gagan     | Shahu    | Ganesh Nagar    | Bengaluru | Karnataka   | 525409 | 1234567890 | gagan@gmail.com  |
+|  3 | Raman     | Rathi    | Shastri Village | Mysore    | Karnataka   | 568409 | 9098545432 | raman@gmail.com  |
++----+-----------+----------+-----------------+-----------+-------------+--------+------------+------------------+
+3 rows in set (0.00 sec)
+
+------------------------------UC 5 - DELETE CONTACT USING NAME ------------------------
+
+mysql> delete from addressbook where firstname='Gagan';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from addressbook;
++----+-----------+----------+-----------------+----------+-------------+--------+------------+------------------+
+| id | FirstName | LastName | Address         | City     | State       | Zip    | Phone      | Email            |
++----+-----------+----------+-----------------+----------+-------------+--------+------------+------------------+
+|  1 | Hari      | Om       | Bharat Nagar    | Kolhapur | Maharashtra | 411209 | 9008776655 | hariom@gmail.com |
+|  3 | Raman     | Rathi    | Shastri Village | Mysore   | Karnataka   | 568409 | 9098545432 | raman@gmail.com  |
++----+-----------+----------+-----------------+----------+-------------+--------+------------+------------------+
+2 rows in set (0.00 sec)
+
+------------------------------UC 6 - RETRIEVE CONTACT USING CITY/STATE ------------------------
+
+mysql> select * from addressbook where city='Mysore';
++----+-----------+----------+-----------------+--------+-----------+--------+------------+-----------------+
+| id | FirstName | LastName | Address         | City   | State     | Zip    | Phone      | Email           |
++----+-----------+----------+-----------------+--------+-----------+--------+------------+-----------------+
+|  3 | Raman     | Rathi    | Shastri Village | Mysore | Karnataka | 568409 | 9098545432 | raman@gmail.com |
++----+-----------+----------+-----------------+--------+-----------+--------+------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from addressbook where state='Maharashtra';
++----+-----------+----------+--------------+----------+-------------+--------+------------+------------------+
+| id | FirstName | LastName | Address      | City     | State       | Zip    | Phone      | Email            |
++----+-----------+----------+--------------+----------+-------------+--------+------------+------------------+
+|  1 | Hari      | Om       | Bharat Nagar | Kolhapur | Maharashtra | 411209 | 9008776655 | hariom@gmail.com |
++----+-----------+----------+--------------+----------+-------------+--------+------------+------------------+
+1 row in set (0.00 sec)
+
+------------------------------UC 7 - SIZE OF ADD BOOK BY CITY & STATE ------------------------
+
+mysql> select count(state) from addressbook where state='Maharashtra';
++--------------+
+| count(state) |
++--------------+
+|            1 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select count(state) from addressbook where state='Karnataka';
++--------------+
+| count(state) |
++--------------+
+|            1 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select count(state) from addressbook where state='Goa';
++--------------+
+| count(state) |
++--------------+
+|            0 |
++--------------+
+1 row in set (0.00 sec)
+
+
+mysql> select count(city) from addressbook where city='Kolhapur';
++-------------+
+| count(city) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.00 sec)
+
+------------------------------UC 8 - RETRIEVE  ALPHABETICALLY CONTACT WID CITY------------------------
+
+mysql> select firstname from addressbook where city='Mysore' order by firstname;
++-----------+
+| firstname |
++-----------+
+| Raman     |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> insert into addressbook values
+    -> ('4','Rahul','Rathi','Shastri Village','Mysore','Karnataka','568409','9058745432','rathirahul@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from addressbook;
++----+-----------+----------+-----------------+----------+-------------+--------+------------+----------------------+
+| id | FirstName | LastName | Address         | City     | State       | Zip    | Phone      | Email                |
++----+-----------+----------+-----------------+----------+-------------+--------+------------+----------------------+
+|  1 | Hari      | Om       | Bharat Nagar    | Kolhapur | Maharashtra | 411209 | 9008776655 | hariom@gmail.com     |
+|  3 | Raman     | Rathi    | Shastri Village | Mysore   | Karnataka   | 568409 | 9098545432 | raman@gmail.com      |
+|  4 | Rahul     | Rathi    | Shastri Village | Mysore   | Karnataka   | 568409 | 9058745432 | rathirahul@gmail.com |
++----+-----------+----------+-----------------+----------+-------------+--------+------------+----------------------+
+3 rows in set (0.00 sec)
+
+mysql> select firstname from addressbook where city='Mysore' order by firstname;
++-----------+
+| firstname |
++-----------+
+| Rahul     |
+| Raman     |
++-----------+
+2 rows in set (0.00 sec)
+
+------------------------------UC 9 - IDENTIFY AB WITH NAME & TYPE------------------------
+
+mysql> update addressbook set bookname='MyBook1', booktype='Family';
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from addressbook;
++----+-----------+----------+-----------------+----------+-------------+--------+------------+----------------------+----------+----------+
+| id | FirstName | LastName | Address         | City     | State       | Zip    | Phone      | Email                | BookName | BookType |
++----+-----------+----------+-----------------+----------+-------------+--------+------------+----------------------+----------+----------+
+|  1 | Hari      | Om       | Bharat Nagar    | Kolhapur | Maharashtra | 411209 | 9008776655 | hariom@gmail.com     | MyBook1  | Family   |
+|  3 | Raman     | Rathi    | Shastri Village | Mysore   | Karnataka   | 568409 | 9098545432 | raman@gmail.com      | MyBook1  | Family   |
+|  4 | Rahul     | Rathi    | Shastri Village | Mysore   | Karnataka   | 568409 | 9058745432 | rathirahul@gmail.com | MyBook1  | Family   |
++----+-----------+----------+-----------------+----------+-------------+--------+------------+----------------------+----------+----------+
+3 rows in set (0.00 sec)
+
+------------------------------UC 10 - GET NUMBER OF CONTACT . COUNT BY TYPE ------------------------
+
+
+mysql> insert into addressbook values('2','Satish','Kumar','Preet Nagar','Shahada','Maharashtra','425409','9996678999','satish@gmail.com','MyBook1','Profession');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into addressbook values('5','Bhanu','Shah','Meera Nagar','GandhiDHam','Gujarat','325409','3488776655','bhanu@gmail.com','MyBook2','Friends');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from addressbook;
++----+-----------+----------+-----------------+------------+-------------+--------+------------+----------------------+----------+------------+
+| id | FirstName | LastName | Address         | City       | State       | Zip    | Phone      | Email                | BookName | BookType   |
++----+-----------+----------+-----------------+------------+-------------+--------+------------+----------------------+----------+------------+
+|  1 | Hari      | Om       | Bharat Nagar    | Kolhapur   | Maharashtra | 411209 | 9008776655 | hariom@gmail.com     | MyBook1  | Family     |
+|  2 | Satish    | Kumar    | Preet Nagar     | Shahada    | Maharashtra | 425409 | 9996678999 | satish@gmail.com     | MyBook1  | Profession |
+|  3 | Raman     | Rathi    | Shastri Village | Mysore     | Karnataka   | 568409 | 9098545432 | raman@gmail.com      | MyBook1  | Family     |
+|  4 | Rahul     | Rathi    | Shastri Village | Mysore     | Karnataka   | 568409 | 9058745432 | rathirahul@gmail.com | MyBook1  | Family     |
+|  5 | Bhanu     | Shah     | Meera Nagar     | GandhiDHam | Gujarat     | 325409 | 3488776655 | bhanu@gmail.com      | MyBook2  | Friends    |
++----+-----------+----------+-----------------+------------+-------------+--------+------------+----------------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select booktype,count(*) from addressbook group by booktype;
++------------+----------+
+| booktype   | count(*) |
++------------+----------+
+| Family     |        3 |
+| Profession |        1 |
+| Friends    |        1 |
++------------+----------+
+3 rows in set (0.00 sec)
+
+------------------------------UC 11 - ADD PERSON TO BOTH FRIEND & FAMILY ------------------------
+
+
+
+
+
