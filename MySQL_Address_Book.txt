@@ -206,6 +206,10 @@ mysql> select firstname from addressbook where city='Mysore' order by firstname;
 
 ------------------------------UC 9 - IDENTIFY AB WITH NAME & TYPE------------------------
 
+mysql> alter table addressbook add column bookname varchar(20), add column booktype varchar(20);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
 mysql> update addressbook set bookname='MyBook1', booktype='Family';
 Query OK, 3 rows affected (0.00 sec)
 Rows matched: 3  Changed: 3  Warnings: 0
@@ -253,7 +257,85 @@ mysql> select booktype,count(*) from addressbook group by booktype;
 
 ------------------------------UC 11 - ADD PERSON TO BOTH FRIEND & FAMILY ------------------------
 
+mysql> insert into addressbook values ('0101', 'Prakash', 'Udikeri', 'Land', 'Earth', 'Universe', '696969', '9420420420', 'prAK47ash@gmail.com', 'MyBook2','Friends');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into addressbook values ('56', 'Mukesh', 'Ambani', 'Antilla', 'Mumbai', 'Maharashtra', '420420', '9211921192', 'nwo@gmail.com', 'MyBook1','Family');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from addressbook;
++-----+-----------+----------+-----------------+------------+-------------+--------+------------+----------------------+----------+------------+
+| id  | FirstName | LastName | Address         | City       | State       | Zip    | Phone      | Email                | BookName | BookType   |
++-----+-----------+----------+-----------------+------------+-------------+--------+------------+----------------------+----------+------------+
+|   1 | Hari      | Om       | Bharat Nagar    | Kolhapur   | Maharashtra | 411209 | 9008776655 | hariom@gmail.com     | MyBook1  | Family     |
+|   2 | Satish    | Kumar    | Preet Nagar     | Shahada    | Maharashtra | 425409 | 9996678999 | satish@gmail.com     | MyBook1  | Profession |
+|   3 | Raman     | Rathi    | Shastri Village | Mysore     | Karnataka   | 568409 | 9098545432 | raman@gmail.com      | MyBook1  | Family     |
+|   4 | Rahul     | Rathi    | Shastri Village | Mysore     | Karnataka   | 568409 | 9058745432 | rathirahul@gmail.com | MyBook1  | Family     |
+|   5 | Bhanu     | Shah     | Meera Nagar     | GandhiDHam | Gujarat     | 325409 | 3488776655 | bhanu@gmail.com      | MyBook2  | Friends    |
+|  56 | Mukesh    | Ambani   | Antilla         | Mumbai     | Maharashtra | 420420 | 9211921192 | nwo@gmail.com        | MyBook1  | Family     |
+| 101 | Prakash   | Udikeri  | Land            | Earth      | Universe    | 696969 | 9420420420 | prAK47ash@gmail.com  | MyBook2  | Friends    |
++-----+-----------+----------+-----------------+------------+-------------+--------+------------+----------------------+----------+------------+
+7 rows in set (0.00 sec)
+
+------------------------------UC 12 - ER Diagram ------------------------
 
 
 
+
+
+
+------------------------------UC 13 - PERFORM VARIOUS OPERATIONS FROM PREVIOUS UCs ------------------------
+
+mysql> SELECT city, LENGTH(city) AS LengthOfName FROM AddressBook;
++------------+--------------+
+| city       | LengthOfName |
++------------+--------------+
+| Kolhapur   |            8 |
+| Shahada    |            7 |
+| Mysore     |            6 |
+| Mysore     |            6 |
+| GandhiDHam |           10 |
+| Mumbai     |            6 |
+| Earth      |            5 |
++------------+--------------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT city, LENGTH(state) AS LengthOfName FROM AddressBook;
++------------+--------------+
+| city       | LengthOfName |
++------------+--------------+
+| Kolhapur   |           11 |
+| Shahada    |           11 |
+| Mysore     |            9 |
+| Mysore     |            9 |
+| GandhiDHam |            7 |
+| Mumbai     |           11 |
+| Earth      |            8 |
++------------+--------------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT state, LENGTH(state) AS LengthOfName FROM AddressBook;
++-------------+--------------+
+| state       | LengthOfName |
++-------------+--------------+
+| Maharashtra |           11 |
+| Maharashtra |           11 |
+| Karnataka   |            9 |
+| Karnataka   |            9 |
+| Gujarat     |            7 |
+| Maharashtra |           11 |
+| Universe    |            8 |
++-------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> select phone from Addressbook where Booktype='family';
++------------+
+| phone      |
++------------+
+| 9008776655 |
+| 9098545432 |
+| 9058745432 |
+| 9211921192 |
++------------+
+4 rows in set (0.00 sec)
 
